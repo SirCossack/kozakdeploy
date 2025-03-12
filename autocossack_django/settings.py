@@ -36,7 +36,6 @@ SOCIAL_AUTH_PIPELINE = [
 ]
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'https://kozakdeploy.onrender.com'
-SOCIAL_AUTH_TWITCH_OAUTH2_REDIRECT_URI = "https://kozakdeploy.onrender.com/complete/twitch/"
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['uid']
 AUTH_USER_MODEL = 'login.AppUser'
 # Quick-start development settings - unsuitable for production
