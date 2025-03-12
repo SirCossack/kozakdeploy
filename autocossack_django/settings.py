@@ -35,6 +35,7 @@ SOCIAL_AUTH_PIPELINE = [
     'login.pipeline.check_wtf_is_wrong',
 ]
 
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'https://kozakdeploy.onrender.com'
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['uid']
 AUTH_USER_MODEL = 'login.AppUser'
