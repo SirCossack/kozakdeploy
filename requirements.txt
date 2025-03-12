@@ -1,0 +1,6 @@
+dj-database-url==2.3.0
+Django==5.1.7
+mysqlclient==2.2.7
+social-auth-app-django==5.4.3
+websocket-client==1.8.0
+whitenoise==6.9.0
