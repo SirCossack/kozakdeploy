@@ -35,7 +35,7 @@ SOCIAL_AUTH_PIPELINE = [
     'login.pipeline.check_wtf_is_wrong',
 ]
 
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'http://localhost:8000'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = 'https://kozakdeploy.onrender.com'
 SOCIAL_AUTH_FIELDS_STORED_IN_SESSION = ['uid']
 AUTH_USER_MODEL = 'login.AppUser'
 # Quick-start development settings - unsuitable for production
@@ -47,7 +47,8 @@ SECRET_KEY = os.getenv('django')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["kozakdeploy.onrender.com", "localhost", "127.0.0.1"]
+
 
 
 # Application definition
