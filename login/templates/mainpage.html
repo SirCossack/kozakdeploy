@@ -1,0 +1,242 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'mainpage.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div id="header">
+    <div id="header_grid1">
+        <h1 id="user"> Witaj {{user}} </h1>
+        <div>
+        {% if user.bot_active %}
+            <h2> Bot is Active </h2>
+        {% else %}
+            <h2> Bot is Inactive </h2>
+        {% endif %}
+        </div>
+
+    </div>
+    <div id="header_grid2">
+        <p onclick="loadContent(this)" id="coms" class="panel">Commands</p>
+        <p onclick="loadContent(this)" id="vars" class="panel">Variables</p>
+        <a href="{% url 'activatebot' %}" class="panel">ON / OFF</a>
+        <p onclick="loadContent(this)" id="about" class="panel">About</p>
+        <a href="{% url 'logout' %}" class="panel">Log out</a>
+<!--
+        <form id="logout" action="/log-out" method="POST">
+            {% csrf_token %}
+            <input id="logout_button" type="submit" value="Logout">
+        </form>
+        -->
+    </div>
+ </div>
+
+<div id="content">
+
+    <div class="content" id="coms_content">
+        <div class="contentdiv">
+            <div class="contentdivheader"><h2>Your Commands:</h2>
+           </div>
+            <div class="list">
+                <div class="listdiv">
+                    <div><b>Command</b></div>
+                    <div><b>Message</b></div>
+                    <div><b>Function</b></div>
+                    <div><b>Mod?</b></div>
+                    <div><b>Time</b></div>
+                    <div onclick="Showcform()" class="adder"><b>+</b></div>
+                </div>
+                    {% for command in usercommands %}
+                <div id="{{ command.command_name }}" onmouseover="Showc(this)" onmouseout="Hidec(this)" class="listdiv">
+                    <div> {{ command.command_name }} </div>
+                    <div> {{ command.command_message }} </div>
+                    <div> {{ command.command_function }} </div>
+                    <div> {{ command.command_mod }} </div>
+                    <div> {{ command.command_time }} </div>
+                    <div> <b><a id="{{ command.command_name }}edit" class="edidel" href="http://localhost:8000/commands/?command={{ command.command_name }}"> Edit </a> <a id="{{ command.command_name }}del" class="edidel" href="http://localhost:8000/commands/delete/?command={{ command.command_name }}"> Del </a> </b> </div>
+                </div>
+                    {% endfor %}
+            </div>
+        </div>
+        <div id="comscontentdiv" class="contentdiv comscontentdiv">
+                {% for comm in usercommandforms %}
+                    <div  class="comoverview" id="{{ comm.instance.command_name }}-comform">
+                        {{ comm }}
+                    </div>
+                {% endfor %}
+
+                <div id="cform" class="cformpart">
+                    <form action="/commands/adding/" method="POST">
+                        {% csrf_token %}
+                        {{ commandform }}
+                        <br>
+                        <input id="cforminput" value="Send" type="submit">  <div onclick="Hidecform()" id="cformcancel"> Cancel</div>
+                    </form>
+
+                </div>
+
+                <div class="dragdrop cformpart" id="utility-coms">
+                    {% for command in coms %}
+                    <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ command }}</div>
+                    {% endfor %}
+                </div>
+                <div class="dragdrop cformpart" id="variables">
+                    {% for variable in vars %}
+                    <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ variable }}</div>
+                    {% endfor %}
+                </div>
+                <div class="dragdrop cformpart" id="variable-coms">
+                     {% for varcom in varcoms %}
+                    <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ varcom }}</div>
+                    {% endfor %}
+                </div>
+
+        </div>
+    </div>
+
+    <div class="content" id="vars_content">
+        <div class="contentdiv">
+            <div class="contentdivheader">
+                <h2>Your Variables:</h2>
+            </div>
+            <div class="varlist">
+                <div class="varlistdiv">
+                    <div><b>Variable</b></div>
+                    <div><b>Value</b></div>
+                    <a href="{% url 'addvar' %}" class="adder"><b>+</b></a>
+                </div>
+            {% for var in uservars %}
+                <div id="{{ var.variable_name }}" onmouseover="Showv(this)" onmouseout="Hidev(this)" class="varlistdiv">
+                    <div> {{ var.variable_name }} </div>
+                    <div> {{ var.variable_value }} </div>
+                    <div> <b><a class="edidel" href="http://localhost:8000/variables/?variable={{ var.variable_name }}"> Edit </a> <a class="edidel" href="http://localhost:8000/variables/delete/?variable={{ var.variable_name }}"> Del </a> </b></div>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+        <div id="varscontentdiv" class="contentdiv varscontentdiv">
+            {% for varr in uservariableforms %}
+                    <div  class="comoverview" id="{{ varr.instance.variable_name }}-varform">
+                        {{ varr }}
+                    </div>
+                {% endfor %}
+
+    </div>
+</div>
+
+    <div class="content" id="about_content">
+        <div class="contentdiv">
+            <h2>The Man, The Myth, The Legend:</h2>
+        </div>
+    </div>
+</div>
+
+<div id="footer">
+</div>
+
+</body>
+
+
+
+<script>
+    let lockedc = 0
+    let lockedv = 0
+
+    function Hidecform () {
+        for (let item of document.getElementsByClassName("cformpart")) {
+            item.style.display = "none"
+        }
+        lockedc = 0
+
+    }
+
+    function Showcform () {
+        for (let item of document.getElementsByClassName("cformpart")) {
+            item.style.display = "block"
+        }
+        lockedc = 1
+    }
+
+    function Showc (item) {
+         if (lockedc == 0) {
+        let a = item.id.trim();
+        document.getElementById("comscontentdiv").className = "contentdiv lookup";
+        document.getElementById(a + "-comform").style.display = "flex";}
+    }
+
+    function Hidec (item) {
+        let a = item.id.trim();
+        document.getElementById("comscontentdiv").className = "contentdiv comscontentdiv";
+        document.getElementById(a + "-comform").style.display = "none";
+    }
+
+    function Showv (item) {
+
+        if (lockedv == 0) {
+        let a = item.id.trim();
+        document.getElementById("varscontentdiv").className = "contentdiv lookup";
+        document.getElementById(a + "-varform").style.display = "flex";}
+    }
+
+    function Hidev (item) {
+        let a = item.id.trim();
+        document.getElementById("varscontentdiv").className = "contentdiv varscontentdiv";
+        document.getElementById(a + "-varform").style.display = "none";
+    }
+
+    function onDrag (event) {
+        event.dataTransfer.setData("innerHTML", event.target.innerHTML);
+    }
+
+    function onDropmsg (event) {
+       let text = event.dataTransfer.getData("innerHTML").trim();
+       event.target.value = event.target.value + `{var[${text}]}`;
+    }
+
+    function onDropfun (event) {
+       let text = event.dataTransfer.getData("innerHTML").trim();
+       event.target.value = event.target.value + `var['${text}']`;
+    }
+
+    function allowDrop (event) {
+        event.preventDefault();
+    }
+
+    function loadContent (panel) {
+        document.getElementById("coms_content").style.display = "none";
+        document.getElementById("vars_content").style.display = "none";
+        document.getElementById("about_content").style.display = "none";
+        document.getElementById(panel.id + "_content").style.display = "grid";
+
+        if (panel.id == "about") {
+            document.getElementById(panel.id + "_content").style.gridTemplateColumns = "1fr";
+        } else {
+            document.getElementById(panel.id + "_content").style.gridTemplateColumns = "1fr 1fr";
+    }}
+
+
+
+    document.getElementById("coms_content").style.display = "grid"
+
+    let msg = document.getElementById("command_message");
+    let fun = document.getElementById("command_function");
+
+    if (msg) {
+        msg.addEventListener("drop", onDropmsg);
+        msg.addEventListener("dragover", allowDrop);
+    }
+    if (fun) {
+        fun.addEventListener("drop", onDropfun);
+        fun.addEventListener("dragover", allowDrop);
+    }
+
+
+
+</script>
+
+</html>

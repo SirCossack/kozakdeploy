@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/variables/adding/" method="POST">
+    {% csrf_token %}
+    {{ form }}
+        {% if var_items %}
+            <div id="listvars">
+          {% for item in var_items %}
+            <input class="variable_elements" type="text" id="firstvar" name="listvarelements" onblur="AddInput(this)" value="{{ item.item_value }}">
+          {% endfor %}
+            </div>
+        {% else %}
+          <div id="listvars" style="visibility:hidden;">
+          <input class="variable_elements" type="text" id="firstvar" name="listvarelements" onblur="AddInput(this)">
+          </div>
+        {% endif %}
+
+<input type="submit"> OK
+</form>
+
+<script>
+function ShowItemVariables() {
+    let type = document.getElementById("id_variable_type").value;
+    if (type === "list") {
+        document.getElementById("listvars").style.visibility = "visible";
+        }
+    else {
+        document.getElementById("listvars").style.visibility = "hidden";
+    }}
+
+let n =document.getElementsByClassName("variable_elements").length;
+console.log(n)
+
+function AddInput(currentInput) {
+    if (currentInput.value.trim() !== "") {
+        let allFilled = true;
+        let inputs = document.querySelectorAll('#listvars input');
+        for (let input of inputs) {
+            if (input.value.trim() === "") {
+                allFilled = false;
+                break;
+        }}
+
+    if (allFilled) {
+        let newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.name = "listvarelements"
+        newInput.onblur = function() { AddInput(this); };
+        document.getElementById("listvars").appendChild(newInput);
+    }}}
+
+
+
+</script>
+</body>
+</html>

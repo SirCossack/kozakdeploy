@@ -1,0 +1,69 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'addcommand.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="page">
+    <div>
+    <form action="/commands/adding/" method="POST">
+        {% csrf_token %}
+        {{ form }}
+    <input type="submit">
+    </form>
+    </div>
+
+    <div id="drags">
+    <div class="dragdrop" id="utility_coms">
+        {% for command in coms %}
+        <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ command }}</div>
+        {% endfor %}
+    </div>
+    <div class="dragdrop" id="variables">
+        {% for variable in vars %}
+        <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ variable }}</div>
+        {% endfor %}
+    </div>
+    <div class="dragdrop" id="variable_coms">
+         {% for varcom in varcoms %}
+        <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ varcom }}</div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+<script>
+
+    let msg = document.getElementById("command_message");
+    let fun = document.getElementById("command_function");
+
+    function onDrag (event) {
+    event.dataTransfer.setData("innerHTML", event.target.innerHTML);
+    }
+
+    function onDropmsg (event) {
+       let text = event.dataTransfer.getData("innerHTML").trim();
+       event.target.value = event.target.value + `{var[${text}]}`;
+    }
+
+    function onDropfun (event) {
+       let text = event.dataTransfer.getData("innerHTML").trim();
+       event.target.value = event.target.value + `var['${text}']`;
+    }
+
+    function allowDrop (event) {
+        event.preventDefault();
+    }
+
+    msg.addEventListener("drop", onDropmsg);
+    fun.addEventListener("drop", onDropfun);
+    msg.addEventListener("dragover", allowDrop);
+    fun.addEventListener("dragover", allowDrop);
+</script>
+
+</body>
+</html>

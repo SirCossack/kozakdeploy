@@ -1,0 +1,37 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'loginpage.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="{% url 'social:begin' 'twitch' %}">Login with twitch</a>
+
+    <div id='section1' class='section1'>
+    <div id='frame3' class='frame3'>
+    </div>
+    <button id='button' class='button'>
+    <div id='state-layer' class='state-layer'>
+    <div id='label-text' class='label-text'>
+    Log in</div>
+    </div>
+    </button>
+    <div id='inputfield' class='inputfield'>
+    <div id='label2' class='label2'>
+    username</div>
+    <div id='input2' class='input2'>
+    </div>
+    </div>
+    <div id='inputfield2' class='inputfield2'>
+    <div id='label3' class='label3'>
+    password</div>
+    <div id='input4' class='input4'>
+    </div>
+    </div>
+    </div>
+
+</body>
+</html>

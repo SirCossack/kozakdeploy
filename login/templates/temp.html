@@ -1,0 +1,455 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'mainpage.css' %}">
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <static>body {
+display: grid;
+grid-template-rows: 10fr minmax(0, 80fr) 10fr;
+justify-items: center;
+font-family: Georgia, serif;
+background-color: #f4f4f4;
+margin: 0;
+padding: 0;
+text-align: center;
+}
+
+#header {
+background: linear-gradient(to right, #a4508b, #5f0a87);
+color: white;
+width: 100%;
+display: grid;
+grid-template-rows: 70% 30%;
+}
+
+#header_grid1{
+display: grid;
+place-items: center;
+}
+
+#header_grid2{
+display: flex;
+align-items: center;
+}
+
+#header_grid2 .panel {
+display: flex;
+height: 100%;
+width: 20%;
+padding-left: 20px;
+padding-right: 20px;
+border-right: 2px solid rgba(255, 255, 255, 0.3);
+align-items: center;
+justify-content: center;
+font-size: 18px;
+color: white;
+text-decoration: none;
+}
+
+#header_grid2 .panel:last-child {
+border-right: 0px solid rgba(255, 255, 255, 0.3);
+
+}
+
+#header_grid2 .panel:hover {
+background-color: rgba(255, 255, 255, 0.1);
+transition: background-color 0.15s ease-in-out;
+}
+
+#content {
+height: 100%;
+width: 100%;
+}
+
+.content {
+display:none;
+grid-template-columns: 1fr 1fr;
+height: 100%;
+width: calc(100% - 60px);
+gap: 30px;
+padding: 0px;
+margin: 30px;
+}
+
+.contentdiv {
+display: grid;
+grid-template-rows: minmax(0, 1fr) minmax(0, 10fr);
+width: 100%;
+max-height: 100%;
+background: white;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+padding: 5px;
+overflow-y: auto;
+}
+
+#comscontentdiv {
+display: grid;
+grid-template-rows: repeat(20, minmax(0, 1fr));
+grid-template-columns: repeat(16, minmax(0, 1fr));
+width: 100%;
+max-height: 100%;
+background: white;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+padding: 5px;
+overflow-y: auto;
+}
+
+#varscontentdiv {
+display: grid;
+grid-template-rows: repeat(20, minmax(0, 1fr));
+grid-template-columns: repeat(16, minmax(0, 1fr));
+width: 100%;
+max-height: 100%;
+background: white;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+padding: 5px;
+overflow-y: auto;
+}
+
+.contentdivheader {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.contentdiv h2 {
+display: inline;
+margin: 0px;
+padding: 0px;
+}
+
+.list {
+align-self: start;
+padding-right: 9px;
+display: grid;
+grid-template-columns: minmax(7em, 5fr) 14fr 9fr minmax(4em, 3fr) 5fr minmax(6em, 3fr);
+grid-template-rows: minmax(0, 1fr);
+}
+
+.list div, .varlist div {
+display: block;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+align-items: center;
+text-align: center;
+vertical-align: middle;
+line-height: 50px;
+height: 50px;
+border-bottom: 1px solid;
+}
+
+
+.varlist {
+align-self: start;
+padding-right: 9px;
+display: grid;
+grid-template-columns: minmax(8em, 2fr) 2fr 1fr;
+grid-template-rows: minmax(0, 1fr);
+}
+
+.list div:nth-child(12n+1), .list div:nth-child(12n+2), .list div:nth-child(12n+3), .list div:nth-child(12n+4), .list div:nth-child(12n+5), .list div:nth-child(12n+6) {
+background: #eb9bd3;
+}
+
+.varlist div:nth-child(6n+1), .varlist div:nth-child(6n+2), .varlist div:nth-child(6n+3) {
+background: #eb9bd3;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5f0a87;
+
+}
+
+
+.adder {
+display: flex;
+align-items: center;
+justify-content: center;
+text-decoration: none;
+background: #eb9bd3;
+cursor: pointer;
+font-size: 1.5em;
+color: black;
+border: 1px solid black;
+border-radius: 8px;
+width: 100%;
+box-shadow: 0px 0px 0px 0px, 0px 0px 0px 0px, 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px;
+}
+
+.edidel {
+cursor: pointer;
+display: inline-block;
+text-align: center;
+vertical-align: middle;
+color: black;
+border: 1px solid black;
+border-radius: 8px;
+width: 40%;
+height: 75%;
+text-decoration: none;
+padding: 2px;
+}
+
+form {
+  max-width: 400px; /* Adjust width as needed */
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+
+label {
+
+  font-size: 15px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+
+.com-overview {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.biginput {
+height: 5em;
+}
+
+
+#cform {
+display: none;
+}
+
+#utility-coms {
+border: 2px solid black;
+grid-column: 13 / span 4;
+grid-row: 1 / span 6;
+}
+
+#variables {
+border: 2px solid black;
+grid-column: 13 / span 4;
+grid-row: 8 / span 6;
+}
+
+#variable-coms {
+border: 2px solid black;
+grid-column: 13 / span 4;
+grid-row: 15 / span 6;
+}</static>
+</head>
+
+<body>
+<div id="header">
+    <div id="header_grid1">
+        <h1 id="user"> Witaj {{user}} </h1>
+        <div>
+        {% if user.bot_active %}
+            <h2> Bot is Active </h2>
+        {% else %}
+            <h2> Bot is Inactive </h2>
+        {% endif %}
+        </div>
+
+    </div>
+    <div id="header_grid2">
+        <p onclick="loadContent(this)" id="coms" class="panel">Commands</p>
+        <p onclick="loadContent(this)" id="vars" class="panel">Variables</p>
+        <a href="{% url 'activatebot' %}" class="panel">ON / OFF</a>
+        <p onclick="loadContent(this)" id="about" class="panel">About</p>
+        <a href="{% url 'logout' %}" class="panel">Log out</a>
+<!--
+        <form id="logout" action="/log-out" method="POST">
+            {% csrf_token %}
+            <input id="logout_button" type="submit" value="Logout">
+        </form>
+        -->
+    </div>
+ </div>
+
+<div id="content">
+
+    <div class="content" id="coms_content">
+        <div class="contentdiv">
+            <div class="contentdivheader"><h2>Your Commands:</h2>
+           </div>
+            <div class="list">
+                    <div>Command</div>
+                    <div>Message</div>
+                    <div>Function</div>
+                    <div>Mod?</div>
+                    <div>Time</div>
+                    <a href="http://localhost:8000/commands/" class="adder"><b>+</b></a>
+                {% for command in usercommands %}
+                    <div onmouseover="Show(this)" onmouseout="Hide(this)"> {{ command.command_name }} </div>
+                    <div> {{ command.command_message }} </div>
+                    <div> {{ command.command_function }} </div>
+                    <div> {{ command.command_mod }} </div>
+                    <div> {{ command.command_time }} </div>
+                    <div> <b><a class="edidel" href="http://localhost:8000/commands/?command={{ command.command_name }}"> Edit </a> <a class="edidel" href="http://localhost:8000/commands/delete/?command={{ command.command_name }}"> Del </a> </b> </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="comscontentdiv" class="contentdiv">
+                {% for comm in usercommandforms %}
+                    <div  class="com-overview" id="{{ comm.instance.command_name }}-form">
+                        {{ comm }}
+                    </div>
+                {% endfor %}
+
+                <div id="cform">
+                    <form action="/commands/adding/" method="POST">
+                        {% csrf_token %}
+                        {{ commandform }}
+                    <input type="submit">
+                    </form>
+                </div>
+
+                <div class="dragdrop" id="utility-coms">
+                    {% for command in coms %}
+                    <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ command }}</div>
+                    {% endfor %}
+                </div>
+                <div class="dragdrop" id="variables">
+                    {% for variable in vars %}
+                    <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ variable }}</div>
+                    {% endfor %}
+                </div>
+                <div class="dragdrop" id="variable-coms">
+                     {% for varcom in varcoms %}
+                    <div draggable="true" ondragstart="onDrag(event)" class="command"> {{ varcom }}</div>
+                    {% endfor %}
+                </div>
+
+        </div>
+    </div>
+
+    <div class="content" id="vars_content">
+        <div class="contentdiv">
+            <div class="contentdivheader">
+                <h2>Your Variables:</h2>
+            </div>
+            <div class="varlist">
+                <div>Variable</div>
+                <div>Value</div>
+                <a href="{% url 'addvar' %}" class="adder"><b>+</b></a>
+            {% for var in uservars %}
+                <div> {{ var.variable_name }} </div>
+                <div> {{ var.variable_value }} </div>
+                <div> <b><a class="edidel" href="http://localhost:8000/variables/?variable={{ var.variable_name }}"> Edit </a> <a class="edidel" href="http://localhost:8000/variables/delete/?variable={{ var.variable_name }}"> Del </a> </b>
+                </div>
+                {% endfor %}
+            </div>
+            </div>
+        <div id="varscontentdiv" class="contentdiv">
+    </div>
+</div>
+
+    <div class="content" id="about_content">
+        <div class="contentdiv">
+            <h2>The Man, The Myth, The Legend:</h2>
+        </div>
+    </div>
+</div>
+
+<div id="footer">
+</div>
+
+</body>
+
+
+
+<script>
+    function Show (item) {
+        let a = item.innerHTML.trim()
+        document.getElementById(a + "-form").style.display = "flex";
+    }
+
+    function Hide (item) {
+        let a = item.innerHTML.trim()
+        document.getElementById(a + "-form").style.display = "none";
+    }
+
+    function onDrag (event) {
+        event.dataTransfer.setData("innerHTML", event.target.innerHTML);
+    }
+
+    function onDropmsg (event) {
+       let text = event.dataTransfer.getData("innerHTML").trim();
+       event.target.value = event.target.value + `{var[${text}]}`;
+    }
+
+    function onDropfun (event) {
+       let text = event.dataTransfer.getData("innerHTML").trim();
+       event.target.value = event.target.value + `var['${text}']`;
+    }
+
+    function allowDrop (event) {
+        event.preventDefault();
+    }
+
+    function loadContent (panel) {
+        document.getElementById("coms_content").style.display = "none";
+        document.getElementById("vars_content").style.display = "none";
+        document.getElementById("about_content").style.display = "none";
+        document.getElementById(panel.id + "_content").style.display = "grid";
+
+        if (panel.id == "about") {
+            document.getElementById(panel.id + "_content").style.gridTemplateColumns = "1fr";
+        } else {
+            document.getElementById(panel.id + "_content").style.gridTemplateColumns = "1fr 1fr";
+    }}
+
+
+
+
+
+    document.getElementById("coms_content").style.display = "grid"
+
+    let msg = document.getElementById("command_message");
+    let fun = document.getElementById("command_function");
+
+    if (msg) {
+        msg.addEventListener("drop", onDropmsg);
+        msg.addEventListener("dragover", allowDrop);
+    }
+    if (fun) {
+        fun.addEventListener("drop", onDropfun);
+        fun.addEventListener("dragover", allowDrop);
+    }
+
+
+
+</script>
+
+</html>
