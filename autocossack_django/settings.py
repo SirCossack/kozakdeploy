@@ -78,7 +78,8 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'social_core.backends.twitch.TwitchOAuth2'
+    'social_core.backends.twitch.TwitchOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 ROOT_URLCONF = 'autocossack_django.urls'
@@ -102,6 +103,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'autocossack_django.wsgi.application'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 
 # Database

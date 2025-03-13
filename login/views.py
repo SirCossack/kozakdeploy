@@ -14,10 +14,10 @@ import json
 
 
 def logged_in(request):
+    print(request.user)
     if not request.user.is_authenticated:
         return render(request, 'loginpage.html', )
     else:
-        print(request.user, request.user.uid)
         usercommands = Command.objects.filter(broadcaster=request.user)
         uservars = Variable.objects.filter(broadcaster=request.user)
         filled_command_forms = []
